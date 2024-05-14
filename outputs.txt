@@ -1,0 +1,29 @@
+# login
+    {
+        email
+        password
+    }
+
+# sign up
+    {
+        name
+        username
+        email
+        password
+    }
+
+# get creator details
+    {
+        _id
+        name
+        username
+    }
+
+# create product
+    {
+        product dto
+    }
+# get all product
+# get product by id
+# edit product by id
+# delete product
