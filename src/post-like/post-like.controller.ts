@@ -16,14 +16,14 @@ export class PostLikeController {
     }
 
     @Post('/like/:pid')
-    async LikePost(@Param('pid') pid: string, @Body() user_id: string ){
+    async LikePost(@Param('pid') pid: string, @Body() body: {user_id: string} ){
         this.postService.postLike(pid)
-        return this.postLikeService.like(pid,user_id)
+        return this.postLikeService.like(pid,body.user_id)
     }
 
-    @Post('/unlike')
-    UnikePost(@Param('pid') pid: string, @Body() user_id: string ){
+    @Post('/unlike/:pid')
+    UnikePost(@Param('pid') pid: string, @Body() body: {user_id: string} ){
         this.postService.disLike(pid)
-        return this.postLikeService.dislike(pid,user_id)
+        return this.postLikeService.dislike(pid,body.user_id)
     }
 }

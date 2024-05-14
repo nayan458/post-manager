@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { PostLike } from 'src/schemas/PostLikes.schema';
@@ -22,6 +22,11 @@ export class PostLikeService {
 
     async like(pid: string, uid: string) {
         const post = await this.postLikeModel.findOne({post_id: pid});
+
+        if (post.user_ids.includes(uid)) {
+            throw new Error('User has not liked the post');
+        }
+
         const likes = post.like_count + 1;
         post.user_ids.push(pid);
         
@@ -33,7 +38,10 @@ export class PostLikeService {
 
     async dislike(pid: string, user_id: string) {
         const post = await this.postLikeModel.findOne({ post_id: pid });
-    
+
+        if( post.like_count === 0)
+            throw new HttpException('like_count is zero cannot be negative', 300);
+
         const likes = post.like_count - 1;
 
         const index = post.user_ids.indexOf(user_id);
