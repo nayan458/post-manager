@@ -23,7 +23,7 @@ export class PostLikeService {
     async like(pid: string, uid: string) {
         const post = await this.postLikeModel.findOne({post_id: pid});
         const likes = post.like_count + 1;
-        post.user_ids.push(uid);
+        post.user_ids.push(pid);
         
         return this.postLikeModel.findByIdAndUpdate(post._id, {
             like_count: likes,
@@ -45,4 +45,8 @@ export class PostLikeService {
         }, { new: true });
     }
     
+    async delete(pid: string){
+        const postLike_id = await this.postLikeModel.findOne({post_id: pid})
+        return this.postLikeModel.findByIdAndDelete(postLike_id._id)
+    }
 }

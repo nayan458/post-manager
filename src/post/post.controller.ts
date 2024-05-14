@@ -46,6 +46,7 @@ export class PostController {
 
     @Delete('/:pid')
     deletePost(@Param('pid') id: string){
+        this.postLikeService.delete(id)
         return this.postService.deletePostById(id);
     }
 }
